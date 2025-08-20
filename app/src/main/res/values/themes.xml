@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.LingeriePerFit" parent="Theme.SplashScreen">
+        <item name="postSplashScreenTheme">@style/Theme.Lingerie.App</item>
+        <item name="windowSplashScreenBackground">#FF566A</item>
+    </style>
+
+    <style name="Theme.Lingerie.App" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background" >#FF566A</item>
+        <item name="android:windowBackground">#FF566A</item>
+        <item name= "android:statusBarColor">#FF566A</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+</resources>
+
