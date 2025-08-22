@@ -1,0 +1,8 @@
+query GetCalculatorContent($category: String!) {
+    getCalculatorContent(category: $category) {
+        status
+        message
+        sizeimage
+        staticblock
+    }
+}

@@ -41,7 +41,6 @@ class RemoteDataSource {
                     contentType(ContentType.Application.Json)
 
                 }
-
             }
         }
 
