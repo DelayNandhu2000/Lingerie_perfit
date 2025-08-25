@@ -5,18 +5,19 @@ plugins {
 
     alias(libs.plugins.kotlinAndroidKsp)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
-    namespace = "com.gxl.lingerieperfit"
+    namespace = "com.genxlead.lingeriePer_FitApp"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.gxl.lingerieperfit"
+        applicationId = "com.genxlead.lingeriePer_FitApp"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -97,6 +98,13 @@ dependencies {
 
     //AppCompat
     implementation(libs.accompanist.systemuicontroller)
+
+    // Facebook
+    implementation(libs.facebook.android.sdk)
+
+    // App update
+    implementation(libs.app.update)
+    implementation(libs.app.update.ktx)
 
 
 }

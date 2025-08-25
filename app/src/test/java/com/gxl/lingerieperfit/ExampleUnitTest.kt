@@ -1,4 +1,4 @@
-package com.gxl.lingerieperfit
+package com.genxlead.lingeriePer_FitApp
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.gxl.lingerieperfit
+package com.genxlead.lingeriePer_FitApp
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.gxl.lingerieperfit", appContext.packageName)
+        assertEquals("com.genxlead.lingeriePer_FitApp", appContext.packageName)
     }
 }

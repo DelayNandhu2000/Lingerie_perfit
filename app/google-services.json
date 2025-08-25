@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "500835271483",
+    "firebase_url": "https://lingerie-perfit-default-rtdb.firebaseio.com",
+    "project_id": "lingerie-perfit",
+    "storage_bucket": "lingerie-perfit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500835271483:android:1a8092a79c902fa0206d1e",
+        "android_client_info": {
+          "package_name": "com.genxlead.lingeriePer_FitApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPEvbOo0tYXJD1Y2Mu_B_CFQo7F1gN5iA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

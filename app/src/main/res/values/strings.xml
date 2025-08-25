@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">LingeriePerFit</string>
+    <string name="facebook_app_id">1675246656490899</string>
+    <string name="fb_login_protocol_scheme">fb1675246656490899</string>
+    <string name="facebook_client_token">1e28848e99a87fb9a4feb219039a23a7</string>
 </resources>
