@@ -2,6 +2,11 @@ package com.genxlead.lingeriePer_FitApp.ui.theme
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -25,6 +30,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -32,6 +38,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -46,6 +55,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -69,7 +79,16 @@ import com.genxlead.lingeriePer_FitApp.ui.module.home.data.CurrentBrand
 import com.genxlead.lingeriePer_FitApp.ui.module.home.data.CurrentFit
 import com.genxlead.lingeriePer_FitApp.ui.module.home.data.DoYouKnow
 import com.genxlead.lingeriePer_FitApp.ui.module.home.presentaion.YesIdoOnBoard
+import com.gxl.lingerieperfit.R
+import com.gxl.lingerieperfit.ui.module.home.data.BraSize
+import com.gxl.lingerieperfit.ui.module.home.data.CurrentBrand
+import com.gxl.lingerieperfit.ui.module.home.data.CurrentFit
+import com.gxl.lingerieperfit.ui.module.home.data.DoYouKnow
+import com.gxl.lingerieperfit.ui.module.home.data.HomeState
+import com.gxl.lingerieperfit.ui.module.home.presentaion.YesIdoOnBoard
+import com.gxl.lingerieperfit.ui.module.home.presentaion.viewModel.HomeViewModel
 import kotlin.math.roundToInt
+
 
 @Composable
 fun ShyawayTextLarge(
@@ -80,13 +99,15 @@ fun ShyawayTextLarge(
     Text(text, style = style, modifier = modifier)
 }
 
+
 @Composable
 fun ShyawayTextMedium(
     text: String,
     modifier: Modifier = Modifier,
-    style: TextStyle = MaterialTheme.typography.bodyMedium
+    style: TextStyle = MaterialTheme.typography.bodyMedium,
+    mLine:Int = 1
 ) {
-    Text(text, style = style, modifier = modifier)
+    Text(text, style = style, modifier = modifier  , maxLines = mLine)
 }
 
 @Composable
@@ -97,10 +118,10 @@ fun ShyawayTextSmall(text: String, style: TextStyle = MaterialTheme.typography.b
 
 @Composable
 fun SelectionBox(item: DoYouKnow, selection: () -> Unit) {
-    val bck =
-        if (item.status) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onPrimary
-    val border =
-        if (item.status) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSecondaryContainer
+
+    val bck = if (item.status) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onPrimary
+    val border = if (item.status) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiaryContainer
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -127,7 +148,7 @@ fun SelectionBox(item: DoYouKnow, selection: () -> Unit) {
             ShyawayTextMedium(
                 text = item.title,
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = MaterialTheme.colorScheme.tertiary,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -161,6 +182,36 @@ fun SelectionInc(isSelect: Boolean) {
     }
 }
 
+@Composable
+fun SelectionLabel(know: DoYouKnow) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                MaterialTheme.colorScheme.onPrimaryContainer,
+                RoundedCornerShape(24.dp)
+            )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Transparent, RoundedCornerShape(24.dp))
+                .padding(vertical = 10.dp, horizontal = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            ShyawayTextMedium(
+                text = know.label,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            )
+        }
+    }
+}
+
 
 @Composable
 fun NavigationBtn(
@@ -175,8 +226,10 @@ fun NavigationBtn(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        BtnBackward { clickBackward() }
-        Spacer(modifier = Modifier.width(24.dp))
+        if (currentVisible != YesIdoOnBoard.BustFallType) {
+            BtnBackward { clickBackward() }
+            Spacer(modifier = Modifier.width(24.dp))
+        }
         BtnForward {
             clickForward()
         }
@@ -237,7 +290,8 @@ fun CardTop(cardHead: Triple<String, String, String>?) {
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -386,17 +440,24 @@ fun FitSlider(
     }
 
     // State for current slider position
-    var sliderPosition by remember { mutableFloatStateOf(0f) }
-
-    // Calculate current fit index based on slider position (safe calculation)
+    val currentFitIndex = bandFitList.indexOfFirst { it.status }.takeIf { it >= 0 } ?: 0
     val maxIndex = (bandFitList.size - 1).coerceAtLeast(0)
-    val currentFitIndex = sliderPosition.roundToInt().coerceIn(0, maxIndex)
-    val currentFit = bandFitList[currentFitIndex]
 
-    // Trigger callback when selection changes
+    // 👇 sliderPosition must survive recomposition
+    var sliderPosition by remember { mutableFloatStateOf(currentFitIndex.toFloat()) }
+
+    // Keep sliderPosition in sync when ViewModel changes the selection
     LaunchedEffect(currentFitIndex) {
-        onSelectionChanged(currentFitIndex)
+        sliderPosition = currentFitIndex.toFloat()
     }
+
+    // Update ViewModel when slider position changes
+    LaunchedEffect(sliderPosition) {
+        val newIndex = sliderPosition.roundToInt()
+        onSelectionChanged(newIndex)
+    }
+
+    val currentFit = bandFitList[currentFitIndex]
 
     Column(
         modifier = Modifier
@@ -413,10 +474,10 @@ fun FitSlider(
             AnimatedContent(
                 targetState = currentFitIndex,
                 transitionSpec = {
-                    fadeIn(animationSpec = tween(400)).togetherWith(
+                    fadeIn(animationSpec = tween(2000)).togetherWith(
                         fadeOut(
                             animationSpec = tween(
-                                200
+                                2000
                             )
                         )
                     )
@@ -474,13 +535,15 @@ fun FitSlider(
 
             // Custom slider track with labels
             Box(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 30.dp)
             ) {
                 // Background track
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(6.dp)
+                        .height(2.dp)
                         .clip(RoundedCornerShape(3.dp))
                         .background(Color.Gray.copy(alpha = 0.2f))
                         .align(Alignment.Center)
@@ -491,7 +554,7 @@ fun FitSlider(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(progress)
-                        .height(6.dp)
+                        .height(4.dp)
                         .clip(RoundedCornerShape(3.dp))
                         .background(
                             Brush.horizontalGradient(
@@ -515,18 +578,16 @@ fun FitSlider(
                         val isActive = index <= currentFitIndex
                         Box(
                             modifier = Modifier
-                                .size(12.dp)
+                                .size(20.dp)
                                 .clip(CircleShape)
                                 .background(
                                     if (isActive) MaterialTheme.colorScheme.primary else Color(
                                         0xFFFF99A5
                                     )
                                 )
-                                .border(
-                                    width = if (index == currentFitIndex) 2.dp else 0.dp,
-                                    color = Color.White,
-                                    shape = CircleShape
-                                )
+                                .clickable {
+                                    sliderPosition = index.toFloat()
+                                }
                         )
                     }
                 }
@@ -551,7 +612,10 @@ fun FitSlider(
                                 }
                             }
                         }
-                        .clickable { /* Handle tap to set position */ }
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) { /* Handle tap to set position */ }
                         .align(Alignment.Center)
                 )
             }
@@ -559,19 +623,20 @@ fun FitSlider(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 12.dp),
+                    .padding(bottom = 12.dp, start = 16.dp, end = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 bandFitList.forEachIndexed { index, fit ->
                     val isSelected = index == currentFitIndex
-
                     Text(
                         text = fit.title,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                         color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.clickable {
+                            sliderPosition = index.toFloat()
+                        }
                     )
                 }
             }
@@ -584,6 +649,7 @@ fun FitSlider(
 
 @Composable
 fun OutlinedEditText(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
@@ -609,7 +675,7 @@ fun OutlinedEditText(
         Spacer(modifier = Modifier.height(getHeight(8)))
         // Border and background
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .height(getHeight(44))
                 .clip(RoundedCornerShape(12.dp))
@@ -661,7 +727,6 @@ fun OutlinedEditText(
                     }
                 },
             )
-
         }
         Spacer(modifier = Modifier.height(getHeight(4)))
         if (!error.isNullOrEmpty())
@@ -670,8 +735,429 @@ fun OutlinedEditText(
                 style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.error)
             )
 
-
         // Text field
+    }
+}
+
+@Composable
+fun HomeTopBar(state: HomeState, backClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.onPrimary)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.perfit_arrow_back),
+                modifier = Modifier.clickable(
+                    indication = null,
+                    interactionSource = remember {  MutableInteractionSource() }
+                ) {
+                    backClick()
+                },
+                contentDescription = null,
+                tint = Color.Unspecified,
+            )
+            TopBarStatus(
+                status = state.topBarInc,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 24.dp)
+            )
+
+            ShyawayTextMedium(
+                text = "${state.topBarInc.count { it }}/${state.topBarInc.size}",
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.tertiary,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 14.sp
+                )
+            )
+        }
+    }
+}
+
+@Composable
+fun TopBarStatus(modifier: Modifier = Modifier, status: List<Boolean>) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        status.forEachIndexed { index, bool ->
+            BarStatus(
+                status = bool,
+                modifier = Modifier.weight(1f)
+            )
+            if (index != 4) Spacer(modifier = Modifier.width(8.dp))
+        }
+    }
+}
+
+@Composable
+fun BarStatus(modifier: Modifier = Modifier, status: Boolean) {
+    HorizontalDivider(
+        modifier = modifier
+            .height(4.dp)
+            .clip(RoundedCornerShape(2.dp)),
+        thickness = 4.dp,
+        color = if (status) MaterialTheme.colorScheme.primary else Color(0xFFE8E8E8)
+    )
+}
+
+@Composable
+fun FinalButtons(clickStart: () -> Unit, clickShop: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 44.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        BtnStartAgain(clickStart)
+        Spacer(modifier = Modifier.width(16.dp))
+        BtnShop(clickShop)
+    }
+}
+
+@Composable
+fun BtnStartAgain(
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.onPrimary,
+            contentColor = MaterialTheme.colorScheme.primary
+        ),
+        shape = RoundedCornerShape(24.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+        modifier = Modifier
+            .width(148.dp)
+            .height(40.dp)
+    ) {
+        ShyawayTextMedium(
+            text = "START AGAIN",
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 12.sp
+            )
+        )
+    }
+}
+
+@Composable
+fun BtnShop(
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = { onClick() },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        shape = RoundedCornerShape(24.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+        modifier = Modifier
+            .width(148.dp)
+            .height(40.dp),
+
+        ) {
+        ShyawayTextMedium(
+            text = "SHOP NOW",
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 12.sp
+            )
+        )
+    }
+}
+
+
+@Composable
+fun FitInputEdit(state: HomeState, viewModel: HomeViewModel) {
+    val value =
+        if (state.currentOnBoard == YesIdoOnBoard.ChartCalculationBra) state.onInputBand.toString() else state.onInputHip.toString()
+    val placeHolder =
+        if (state.currentOnBoard == YesIdoOnBoard.ChartCalculationBra) "Band (eg. 80cm)" else "Hip (eg. 95cm)"
+
+    var isFocused by remember { mutableStateOf(false) }
+    var isFocused2 by remember { mutableStateOf(false) }
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .width(142.dp)
+                .height(getHeight(36))
+                .clip(RoundedCornerShape(24.dp))
+                .border(
+                    border = BorderStroke(
+                        width = if (isFocused) 2.dp else 1.dp,
+                        color = MaterialTheme.colorScheme.primary
+                    ),
+                    shape = RoundedCornerShape(24.dp)
+                )
+                .background(
+                    color = Color(0xFFFFFFFF),
+                    shape = RoundedCornerShape(24.dp)
+                )
+        ) {
+            BasicTextField(
+                value = value,
+                onValueChange = {
+                    if (state.currentOnBoard == YesIdoOnBoard.ChartCalculationBra) {
+                        viewModel.onInputBand(it)
+                    } else {
+                        viewModel.onInputHip(it)
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .onFocusChanged { focusState ->
+                        isFocused = focusState.isFocused
+                    },
+                textStyle = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.tertiary,
+                ),
+                cursorBrush = SolidColor(Color(0xFF7E7E7E)),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next
+                ),
+                maxLines = 1,
+                decorationBox = { innerTextField ->
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        if (!isFocused) {
+                            ShyawayTextMedium(
+                                text = placeHolder,
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Normal
+                                ),
+                            )
+                        }
+                        innerTextField()
+                    }
+                },
+            )
+        }
+        if (state.currentOnBoard == YesIdoOnBoard.ChartCalculationBra) {
+            Spacer(modifier = Modifier.width(16.dp))
+            Box(
+                modifier = Modifier
+                    .width(142.dp)
+                    .height(getHeight(36))
+                    .clip(RoundedCornerShape(24.dp))
+                    .border(
+                        border = BorderStroke(
+                            width = if (isFocused) 2.dp else 1.dp,
+                            color = MaterialTheme.colorScheme.primary
+                        ),
+                        shape = RoundedCornerShape(24.dp)
+                    )
+                    .background(
+                        color = Color(0xFFFFFFFF),
+                        shape = RoundedCornerShape(24.dp)
+                    )
+            ) {
+                BasicTextField(
+                    value = state.onInputBust,
+                    onValueChange = {
+                        viewModel.onInputBust(it)
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .onFocusChanged { focusState ->
+                            isFocused2 = focusState.isFocused
+                        },
+                    textStyle = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.tertiary,
+                    ),
+                    cursorBrush = SolidColor(Color(0xFF7E7E7E)),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                    maxLines = 1,
+                    decorationBox = { innerTextField ->
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        ) {
+                            if (!isFocused2 && state.onInputBust.isEmpty()) {
+                                ShyawayTextMedium(
+                                    text = "Bust (eg. 80cm)",
+                                    style = MaterialTheme.typography.bodyMedium.copy(
+                                        color = MaterialTheme.colorScheme.primary,
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.Normal
+                                    ),
+                                )
+                            }
+                            innerTextField()
+                        }
+                    },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SetSizeCalculatorShimmer() {
+
+    // Create shimmer brush
+    val shimmerColors = listOf(
+        Color.LightGray.copy(alpha = 0.6f),
+        Color.LightGray.copy(alpha = 0.2f),
+        Color.LightGray.copy(alpha = 0.6f)
+    )
+
+    val transition = rememberInfiniteTransition(label = "shimmer")
+    val translateAnim = transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "shimmer"
+    )
+
+    val brush = Brush.linearGradient(
+        colors = shimmerColors,
+        start = Offset.Zero,
+        end = Offset(x = translateAnim.value, y = translateAnim.value)
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(16.dp)
+                .padding(horizontal = 100.dp)
+                .background(brush = brush, shape = RoundedCornerShape(12.dp))
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        LazyColumn {
+            item {
+                // Image shimmer
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .width(172.dp)
+                            .height(164.dp)
+                            .background(brush = brush, shape = RoundedCornerShape(8.dp))
+                    )
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp, start = 12.dp, end = 12.dp)
+                ) {
+                    // Static block shimmer - 3 items
+                    repeat(6) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            // Bullet point shimmer
+                            Box(
+                                modifier = Modifier
+                                    .size(8.dp)
+                                    .background(brush = brush, shape = CircleShape),
+                            )
+                            Spacer(Modifier.width(8.dp))
+
+                            // Text shimmer
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(14.dp)
+                                    .background(brush = brush, shape = RoundedCornerShape(12.dp))
+                            )
+                        }
+                        Spacer(Modifier.height(12.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun FitVideoPlay(playClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp)
+            .background(MaterialTheme.colorScheme.onPrimary, RoundedCornerShape(12.dp))
+
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp, horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                ShyawayTextMedium(
+                    text = "Need More Help?",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.secondary,
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                ShyawayTextMedium(
+                    text = "Watch our measurement guide",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.tertiary,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Normal
+                    ),
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(MaterialTheme.colorScheme.onPrimary, CircleShape)
+                    .clickable {
+                        playClick()
+                    }
+                    .border(1.dp, MaterialTheme.colorScheme.primary, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.fit_play_video),
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                )
+            }
+        }
     }
 }
 
@@ -679,6 +1165,7 @@ fun OutlinedEditText(
 @Preview(showBackground = false)
 @Composable
 fun SelectionBoxPreview() {
+//    FitInputEdit()
 //    SelectionBox("SFASF",
 //        true){}
 

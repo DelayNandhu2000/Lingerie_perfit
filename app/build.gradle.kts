@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.serialization)
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.google.firebase.crashlytics)
+    alias(libs.plugins.apollo)
 }
 
 android {
@@ -33,14 +34,39 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
+
     buildFeatures {
         compose = true
+    }
+}
+
+apollo {
+    service("service") {
+        packageName.set("com.gxl.lingerieperfit")
+        introspection {
+            endpointUrl.set("https://mcstaging2.shyaway.com/graphql/")
+            schemaFile.set(file("app/src/main/graphql/schema.graphqls"))
+        }
+    }
+}
+
+tasks.register("downloadSchema") {
+    doLast {
+        providers.exec {
+            commandLine(
+                "apollo",
+                "schema:download",
+                "--endpoint=https://mcstaging2.shyaway.com/graphql/",
+                "--output=app/src/main/graphql/schema.graphqls"
+            )
+        }
     }
 }
 
@@ -99,6 +125,14 @@ dependencies {
     //AppCompat
     implementation(libs.accompanist.systemuicontroller)
 
+    //Apollo
+    implementation(libs.apollo.runtime)
+
+    // OkHttp
+    implementation(libs.okhttp)
+
+// OkHttp logging interceptor (needed for HttpLoggingInterceptor)
+    implementation(libs.logging.interceptor)
     // Facebook
     implementation(libs.facebook.android.sdk)
 

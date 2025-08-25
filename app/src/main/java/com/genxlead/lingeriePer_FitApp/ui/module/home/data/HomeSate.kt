@@ -3,9 +3,10 @@ package com.genxlead.lingeriePer_FitApp.ui.module.home.data
 import androidx.annotation.DrawableRes
 import com.google.android.gms.common.images.WebImage
 import com.genxlead.lingeriePer_FitApp.ui.module.home.presentaion.YesIdoOnBoard
+import com.gxl.lingerieperfit.ui.module.home.presentaion.YesIdoOnBoard
 
 data class HomeState(
-    val currentOnBoard: YesIdoOnBoard = YesIdoOnBoard.WomenHood,
+    val currentOnBoard: YesIdoOnBoard = YesIdoOnBoard.BustFallType,
     val womenHood: List<DoYouKnow> = emptyList(),
     val menstrualCycle: List<DoYouKnow> = emptyList(),
     val doYouSelect: List<DoYouKnow> = emptyList(),
@@ -23,6 +24,38 @@ data class HomeState(
     val bustFallType:List<CurrentFit> = emptyList(),
     val bustShapeType:List<CurrentFit> = emptyList(),
     val bustPlacementType:List<CurrentFit> = emptyList(),
+
+    val onInputBand :String = "",
+    val onInputBust :String = "",
+    val onInputHip :String ="",
+
+    val fitWomanHood:String?=null,
+    val fitMenstrual:String?=null,
+    val fitBrand :String?=null,
+    val fitBraSize:String?=null,
+    val fitBandSize:String?=null,
+    val fitCupSize:String?=null,
+    val fitHookSize:String?=null,
+    val fitStrapSize:String?=null,
+    val fitBustFall:String?=null,
+    val fitBustShape:String?=null,
+    val fitBustPlacement:String?=null,
+    val fitYouKnow: String?=null,
+
+
+    val bandPosition:Int?=null,
+    val bustPosition:Int?=null,
+
+    val fitFinalSize:String?=null,
+
+    val sizeChartLoading:Boolean = false,
+    val chartDataBra : SizeChartContent?=null,
+    val chartDataHip : SizeChartContent?=null,
+    val sizeChartError:String?=null,
+    val chartImage : String?=null,
+
+    val onBoardData :List<OnBoardData> = emptyList(),
+    val topBarInc : List<Boolean> = emptyList()
 )
 
 
@@ -30,6 +63,7 @@ data class CurrentFit(
     @DrawableRes val image: Int,
     val title: String,
     val description: String,
+    val status: Boolean = false
 )
 
 data class SliderValue(
@@ -38,6 +72,7 @@ data class SliderValue(
 )
 data class DoYouKnow(
     val title: String,
+    val label : String = "",
     val status: Boolean = false
 )
 
@@ -59,4 +94,15 @@ data class Hood(
 data class Menstrual(
     val menstrual : String,
     val status: Boolean = false
+)
+
+data class SizeChartContent(
+    val sizeImage: String?=null,
+    val staticBlock: List<String?>?=null,
+)
+
+data class OnBoardData(
+    @DrawableRes val image:Int,
+    val title: String,
+    val dec: String
 )

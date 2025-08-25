@@ -12,11 +12,6 @@ sealed class Screen {
     object Home : Screen()
 
     @Serializable
-    object YesIdo : Screen()
+    object OnBoard : Screen()
 
-    @Serializable
-    object SelfMeasure : Screen()
-
-    @Serializable
-    object FinalResult : Screen()
 }
