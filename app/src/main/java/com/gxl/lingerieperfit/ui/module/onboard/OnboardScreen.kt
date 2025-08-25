@@ -200,8 +200,10 @@ fun PagerItem(item: OnBoardData) {
                 color = MaterialTheme.colorScheme.secondary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
+                letterSpacing = 0.5.sp,
                 textAlign = TextAlign.Center,
-            )
+            ),
+            mLine = 2
         )
         Spacer(modifier = Modifier.height(16.dp))
         ShyawayTextMedium(
@@ -209,8 +211,11 @@ fun PagerItem(item: OnBoardData) {
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.tertiary,
                 fontSize = 12.sp,
-                fontWeight = FontWeight.Normal
-            )
+                fontWeight = FontWeight.Normal,
+                letterSpacing = 0.5.sp,
+                textAlign = TextAlign.Center,
+            ),
+            mLine = 3
         )
     }
 }

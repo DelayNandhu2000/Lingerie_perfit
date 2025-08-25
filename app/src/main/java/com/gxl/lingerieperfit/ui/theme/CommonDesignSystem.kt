@@ -98,9 +98,10 @@ fun ShyawayTextLarge(
 fun ShyawayTextMedium(
     text: String,
     modifier: Modifier = Modifier,
-    style: TextStyle = MaterialTheme.typography.bodyMedium
+    style: TextStyle = MaterialTheme.typography.bodyMedium,
+    mLine:Int = 1
 ) {
-    Text(text, style = style, modifier = modifier)
+    Text(text, style = style, modifier = modifier  , maxLines = mLine)
 }
 
 @Composable
@@ -111,10 +112,10 @@ fun ShyawayTextSmall(text: String, style: TextStyle = MaterialTheme.typography.b
 
 @Composable
 fun SelectionBox(item: DoYouKnow, selection: () -> Unit) {
-    val bck =
-        if (item.status) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onPrimary
-    val border =
-        if (item.status) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSecondaryContainer
+
+    val bck = if (item.status) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onPrimary
+    val border = if (item.status) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiaryContainer
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -141,7 +142,7 @@ fun SelectionBox(item: DoYouKnow, selection: () -> Unit) {
             ShyawayTextMedium(
                 text = item.title,
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = MaterialTheme.colorScheme.tertiary,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -182,11 +183,6 @@ fun SelectionLabel(know: DoYouKnow) {
             .fillMaxWidth()
             .background(
                 MaterialTheme.colorScheme.onPrimaryContainer,
-                RoundedCornerShape(24.dp)
-            )
-            .border(
-                1.dp,
-                MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                 RoundedCornerShape(24.dp)
             )
     ) {
@@ -472,10 +468,10 @@ fun FitSlider(
             AnimatedContent(
                 targetState = currentFitIndex,
                 transitionSpec = {
-                    fadeIn(animationSpec = tween(400)).togetherWith(
+                    fadeIn(animationSpec = tween(2000)).togetherWith(
                         fadeOut(
                             animationSpec = tween(
-                                200
+                                2000
                             )
                         )
                     )
@@ -755,7 +751,7 @@ fun HomeTopBar(state: HomeState, backClick: () -> Unit) {
                 painter = painterResource(R.drawable.perfit_arrow_back),
                 modifier = Modifier.clickable(
                     indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
+                    interactionSource = remember {  MutableInteractionSource() }
                 ) {
                     backClick()
                 },
@@ -770,11 +766,11 @@ fun HomeTopBar(state: HomeState, backClick: () -> Unit) {
             )
 
             ShyawayTextMedium(
-                text = "1",
+                text = "${state.topBarInc.count { it }}/${state.topBarInc.size}",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     color = MaterialTheme.colorScheme.tertiary,
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp
+                    fontSize = 14.sp
                 )
             )
         }

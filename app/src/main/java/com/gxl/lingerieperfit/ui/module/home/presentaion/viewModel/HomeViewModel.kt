@@ -250,18 +250,28 @@ class HomeViewModel(
         }
     }
 
-    fun setTopBarInc(){
-        Log.d("Boolss", "setTopBarInc: ${ state.value.fitBustFall}")
-        Log.d("Boolss", "setTopBarInc: ${ state.value.fitBustShape}")
-        Log.d("Boolss", "setTopBarInc: ${ state.value.fitBustPlacement}")
-        val barBodyType = state.value.fitBustFall != null && state.value.fitBustShape != null && state.value.fitBustPlacement != null
-        val barWomanHood = state.value.fitWomanHood != null
-        val barMenstrual = state.value.fitMenstrual != null
-        val barCurrentUse = state.value.fitBrand != null && state.value.fitBraSize != null
-        val barCurrentFit = state.value.fitBandSize != null && state.value.fitCupSize != null && state.value.fitHookSize != null && state.value.fitStrapSize != null
+    fun restStart() {
         _state.update {
             it.copy(
-                topBarInc = listOf(barBodyType, barWomanHood, barMenstrual, barCurrentUse, barCurrentFit)
+                fitBrand = null,
+                fitBraSize = null,
+                fitBandSize = null,
+                fitCupSize = null,
+                fitHookSize = null,
+                fitStrapSize = null,
+            )
+        }
+    }
+
+    fun setTopBarInc(){
+        val barBodyType = state.value.fitBustFall != null
+        val barWomanHood = state.value.fitWomanHood != null
+        val barCurrentBrand = state.value.fitBrand != null
+        val barCurrentSize = state.value.fitBraSize != null
+        val barCurrentFit = state.value.fitBandSize != null
+        _state.update {
+            it.copy(
+                topBarInc = listOf(barBodyType, barWomanHood, barCurrentBrand,barCurrentSize,barCurrentFit)
             )
         }
     }
@@ -1037,17 +1047,17 @@ private fun isOnBoardData(): List<OnBoardData> {
         OnBoardData(
             R.drawable.cup_fit_fits_well,
             "how to well if my bra cup fit correctly?",
-            "Whether you're dealing with cup spillage of \n breast overflow, don't worry there is help!"
+            "Whether you're dealing with cup spillage of breast overflow, don't worry there is help!"
         ),
         OnBoardData(
             R.drawable.strap_fit_diggs_in,
             "is a adjusting adjusting my bra straps a real solution",
-            "Your bra straps should carry no more than 10% of \n your breast weight? How much does your bear?"
+            "Your bra straps should carry no more than 10% of your breast weight? How much does your bear?"
         ),
         OnBoardData(
             R.drawable.band_fit_fits_well,
             "is your bra band doing its job properly?",
-            "Did you know your bra gets a whopping 80%\n support from the bra band? Are you getting the\n support you deserve? Find out now on our app!"
+            "Did you know your bra gets a whopping 80% support from the bra band? Are you getting the support you deserve? Find out now on our app!"
         ),
 
     )

@@ -137,7 +137,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = koin
                           "https://www.shyaway.com/bra-online/${state.fitFinalSize}-bra/".toUri()))
                   }
               }, clickStart = {
-                  viewModel.resetAllFit()
+                  viewModel.restStart()
                   viewModel.switchCurrentScreen(YesIdoOnBoard.DoYoKnow)
               })
             }
@@ -295,16 +295,16 @@ fun fitNavigationController(state: HomeState, context: Context, viewModel: HomeV
         }
 
         YesIdoOnBoard.BandFit -> {
-            viewModel.switchCurrentScreen(YesIdoOnBoard.CupFit)
+            viewModel.switchCurrentScreen(YesIdoOnBoard.HookFit)
             // viewModel.switchCurrentScreen(YesIdoOnBoard.DoYoKnow)
         }
 
         YesIdoOnBoard.CupFit -> {
-            viewModel.switchCurrentScreen(YesIdoOnBoard.HookFit)
+            viewModel.switchCurrentScreen(YesIdoOnBoard.StrapFit)
         }
 
         YesIdoOnBoard.HookFit -> {
-            viewModel.switchCurrentScreen(YesIdoOnBoard.StrapFit)
+            viewModel.switchCurrentScreen(YesIdoOnBoard.CupFit)
         }
 
         YesIdoOnBoard.StrapFit -> {
@@ -367,17 +367,17 @@ fun fitBackNavigationController(state: HomeState, viewModel: HomeViewModel) {
         }
 
         YesIdoOnBoard.CupFit -> {
-            viewModel.switchCurrentScreen(YesIdoOnBoard.BandFit)
+            viewModel.switchCurrentScreen(YesIdoOnBoard.HookFit)
             viewModel.resetFit(yesIdoOnBoard = YesIdoOnBoard.CupFit)
         }
 
         YesIdoOnBoard.HookFit -> {
-            viewModel.switchCurrentScreen(YesIdoOnBoard.CupFit)
+            viewModel.switchCurrentScreen(YesIdoOnBoard.BandFit)
             viewModel.resetFit(yesIdoOnBoard = YesIdoOnBoard.HookFit)
         }
 
         YesIdoOnBoard.StrapFit -> {
-            viewModel.switchCurrentScreen(YesIdoOnBoard.HookFit)
+            viewModel.switchCurrentScreen(YesIdoOnBoard.CupFit)
             viewModel.resetFit(yesIdoOnBoard = YesIdoOnBoard.StrapFit)
         }
 
