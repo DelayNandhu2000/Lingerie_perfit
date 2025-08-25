@@ -1,4 +1,4 @@
-package com.gxl.lingerieperfit.ui.module.onboard
+package com.genxlead.lingeriePer_FitApp.ui.module.onboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,13 +36,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.gxl.lingerieperfit.R
-import com.gxl.lingerieperfit.ui.base.navGraph.Screen
-import com.gxl.lingerieperfit.ui.module.home.data.OnBoardData
-import com.gxl.lingerieperfit.ui.module.home.presentaion.viewModel.HomeViewModel
-import com.gxl.lingerieperfit.ui.theme.ShyawayTextMedium
+import com.genxlead.lingeriePer_FitApp.R
+import com.genxlead.lingeriePer_FitApp.ui.base.navGraph.Screen
+import com.genxlead.lingeriePer_FitApp.ui.module.home.data.OnBoardData
+import com.genxlead.lingeriePer_FitApp.ui.module.home.presentaion.viewModel.HomeViewModel
+import com.genxlead.lingeriePer_FitApp.ui.theme.ShyawayTextMedium
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
+import kotlin.collections.get
 
 
 @Composable

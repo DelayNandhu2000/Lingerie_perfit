@@ -35,14 +35,12 @@ import com.genxlead.lingeriePer_FitApp.ui.module.home.presentaion.viewModel.Home
 import com.genxlead.lingeriePer_FitApp.ui.theme.CardTop
 import com.genxlead.lingeriePer_FitApp.ui.theme.NavigationBtn
 import com.genxlead.lingeriePer_FitApp.ui.theme.ShyawayTextMedium
-import com.gxl.lingerieperfit.ui.module.home.data.HomeState
-import com.gxl.lingerieperfit.ui.module.home.presentaion.viewModel.HomeViewModel
-import com.gxl.lingerieperfit.ui.theme.CardTop
-import com.gxl.lingerieperfit.ui.theme.FinalButtons
-import com.gxl.lingerieperfit.ui.theme.FitVideoPlay
-import com.gxl.lingerieperfit.ui.theme.HomeTopBar
-import com.gxl.lingerieperfit.ui.theme.NavigationBtn
-import com.gxl.lingerieperfit.ui.theme.ShyawayTextMedium
+import com.genxlead.lingeriePer_FitApp.ui.theme.CardTop
+import com.genxlead.lingeriePer_FitApp.ui.theme.FinalButtons
+import com.genxlead.lingeriePer_FitApp.ui.theme.FitVideoPlay
+import com.genxlead.lingeriePer_FitApp.ui.theme.HomeTopBar
+import com.genxlead.lingeriePer_FitApp.ui.theme.NavigationBtn
+import com.genxlead.lingeriePer_FitApp.ui.theme.ShyawayTextMedium
 import org.koin.compose.viewmodel.koinViewModel
 import androidx.core.net.toUri
 

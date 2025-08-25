@@ -1,11 +1,11 @@
-package com.gxl.lingerieperfit.ui.module.home.domain
+package com.genxlead.lingeriePer_FitApp.ui.module.home.domain
 
 import android.util.Log
 import com.apollographql.apollo.ApolloClient
-import com.gxl.lingerieperfit.GetCalculatorContentQuery
-import com.gxl.lingerieperfit.ui.base.network.ApiResult
-import com.gxl.lingerieperfit.ui.base.network.SafeApiCall
-import com.gxl.lingerieperfit.ui.module.home.data.SizeChartContent
+import com.genxlead.lingeriePer_FitApp.GetCalculatorContentQuery
+import com.genxlead.lingeriePer_FitApp.ui.base.network.ApiResult
+import com.genxlead.lingeriePer_FitApp.ui.base.network.SafeApiCall
+import com.genxlead.lingeriePer_FitApp.ui.module.home.data.SizeChartContent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

@@ -3,7 +3,6 @@ package com.genxlead.lingeriePer_FitApp.ui.module.home.data
 import androidx.annotation.DrawableRes
 import com.google.android.gms.common.images.WebImage
 import com.genxlead.lingeriePer_FitApp.ui.module.home.presentaion.YesIdoOnBoard
-import com.gxl.lingerieperfit.ui.module.home.presentaion.YesIdoOnBoard
 
 data class HomeState(
     val currentOnBoard: YesIdoOnBoard = YesIdoOnBoard.BustFallType,

@@ -30,7 +30,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="scheme" />
-                <data android:host="api.shystats.com" />
+                <data android:host="mcstaging2.shyaway.com" />
                 <data android:pathPattern="/.*" />
             </intent-filter>
         </activity>

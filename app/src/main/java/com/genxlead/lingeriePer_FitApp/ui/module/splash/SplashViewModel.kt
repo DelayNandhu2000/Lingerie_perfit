@@ -25,7 +25,7 @@ class SplashViewModel(
             }
 
         } catch (e: Exception) {
-            Log.e(e.toString(), "checkAppVersion()")
+            Log.e("Firebase: ", e.message.toString())
         }
 
         return AppUpdateType.IMMEDIATE

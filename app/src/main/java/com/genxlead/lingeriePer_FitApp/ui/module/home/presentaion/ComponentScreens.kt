@@ -45,20 +45,10 @@ import com.genxlead.lingeriePer_FitApp.ui.theme.ShyawayTextSmall
 import com.genxlead.lingeriePer_FitApp.ui.theme.ViewBraSize
 import com.genxlead.lingeriePer_FitApp.ui.theme.ViewBrand
 import coil.compose.AsyncImage
-import com.gxl.lingerieperfit.R
-import com.gxl.lingerieperfit.ui.module.home.data.CurrentFit
-import com.gxl.lingerieperfit.ui.module.home.data.HomeState
-import com.gxl.lingerieperfit.ui.module.home.presentaion.viewModel.HomeViewModel
-import com.gxl.lingerieperfit.ui.theme.FitInputEdit
-import com.gxl.lingerieperfit.ui.theme.FitSlider
-import com.gxl.lingerieperfit.ui.theme.OutlinedEditText
-import com.gxl.lingerieperfit.ui.theme.SelectionBox
-import com.gxl.lingerieperfit.ui.theme.SelectionLabel
-import com.gxl.lingerieperfit.ui.theme.SetSizeCalculatorShimmer
-import com.gxl.lingerieperfit.ui.theme.ShyawayTextMedium
-import com.gxl.lingerieperfit.ui.theme.ShyawayTextSmall
-import com.gxl.lingerieperfit.ui.theme.ViewBraSize
-import com.gxl.lingerieperfit.ui.theme.ViewBrand
+import com.genxlead.lingeriePer_FitApp.R
+import com.genxlead.lingeriePer_FitApp.ui.theme.FitInputEdit
+import com.genxlead.lingeriePer_FitApp.ui.theme.SelectionLabel
+import com.genxlead.lingeriePer_FitApp.ui.theme.SetSizeCalculatorShimmer
 
 @Composable
 fun DoYouKnow(viewModel: HomeViewModel, state: HomeState) {

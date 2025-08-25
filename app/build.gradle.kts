@@ -19,7 +19,7 @@ android {
         minSdk = 24
         targetSdk = 36
         versionCode = 2
-        versionName = "1.0"
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,7 +49,7 @@ android {
 
 apollo {
     service("service") {
-        packageName.set("com.gxl.lingerieperfit")
+        packageName.set("com.genxlead.lingeriePer_FitApp")
         introspection {
             endpointUrl.set("https://mcstaging2.shyaway.com/graphql/")
             schemaFile.set(file("app/src/main/graphql/schema.graphqls"))

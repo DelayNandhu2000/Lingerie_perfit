@@ -79,14 +79,8 @@ import com.genxlead.lingeriePer_FitApp.ui.module.home.data.CurrentBrand
 import com.genxlead.lingeriePer_FitApp.ui.module.home.data.CurrentFit
 import com.genxlead.lingeriePer_FitApp.ui.module.home.data.DoYouKnow
 import com.genxlead.lingeriePer_FitApp.ui.module.home.presentaion.YesIdoOnBoard
-import com.gxl.lingerieperfit.R
-import com.gxl.lingerieperfit.ui.module.home.data.BraSize
-import com.gxl.lingerieperfit.ui.module.home.data.CurrentBrand
-import com.gxl.lingerieperfit.ui.module.home.data.CurrentFit
-import com.gxl.lingerieperfit.ui.module.home.data.DoYouKnow
-import com.gxl.lingerieperfit.ui.module.home.data.HomeState
-import com.gxl.lingerieperfit.ui.module.home.presentaion.YesIdoOnBoard
-import com.gxl.lingerieperfit.ui.module.home.presentaion.viewModel.HomeViewModel
+import com.genxlead.lingeriePer_FitApp.ui.module.home.data.HomeState
+import com.genxlead.lingeriePer_FitApp.ui.module.home.presentaion.viewModel.HomeViewModel
 import kotlin.math.roundToInt
 
 

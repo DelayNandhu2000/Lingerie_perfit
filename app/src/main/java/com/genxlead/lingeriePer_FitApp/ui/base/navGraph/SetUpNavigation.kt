@@ -7,9 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.genxlead.lingeriePer_FitApp.ui.module.home.presentaion.HomeScreen
 import com.genxlead.lingeriePer_FitApp.ui.module.splash.SplashScreen
-import com.gxl.lingerieperfit.ui.module.home.presentaion.HomeScreen
-import com.gxl.lingerieperfit.ui.module.onboard.OnBoardScreen
-import com.gxl.lingerieperfit.ui.module.splash.SplashScreen
+import com.genxlead.lingeriePer_FitApp.ui.module.onboard.OnBoardScreen
 
 
 @Composable
