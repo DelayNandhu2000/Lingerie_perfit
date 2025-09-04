@@ -245,7 +245,12 @@ class HomeViewModel(
                 fitStrapSize = null,
                 fitBustFall = null,
                 fitBustShape = null,
-                fitBustPlacement = null
+                fitBustPlacement = null,
+                onInputHip = "",
+                onInputBust = "",
+                onInputBand = "",
+
+
             )
         }
     }
@@ -259,22 +264,35 @@ class HomeViewModel(
                 fitCupSize = null,
                 fitHookSize = null,
                 fitStrapSize = null,
+                fitYouKnow = null,
+                chartDataBra = null,
+                chartDataHip = null,
+                fitFinalSize = null,
+                onInputHip = "",
+                onInputBust = "",
+                onInputBand = ""
             )
         }
     }
 
-    fun setTopBarInc(){
-        val barBodyType = state.value.fitBustFall != null
-        val barWomanHood = state.value.fitWomanHood != null
-        val barCurrentBrand = state.value.fitBrand != null
-        val barCurrentSize = state.value.fitBraSize != null
-        val barCurrentFit = state.value.fitBandSize != null
-        _state.update {
-            it.copy(
-                topBarInc = listOf(barBodyType, barWomanHood, barCurrentBrand,barCurrentSize,barCurrentFit)
-            )
+    fun setTopBarInc() {
+        val size = 5 // always 5
+        val count = when (state.value.currentOnBoard) {
+            YesIdoOnBoard.WomenHood -> 2
+            YesIdoOnBoard.ChartCalculationBra -> 4
+            YesIdoOnBoard.ChartCalculationHip -> 4
+            YesIdoOnBoard.DoYoKnow -> 3
+            YesIdoOnBoard.BustFallType -> 1
+            YesIdoOnBoard.Final -> 5
+            else -> null
+        }
+
+        if (count != null) {
+            val list = List(size) { index -> index < count }
+            _state.update { it.copy(topBarInc = list) }
         }
     }
+
 
     fun getSelecters(currentOnBoard: YesIdoOnBoard) {
         val hood = listOf(

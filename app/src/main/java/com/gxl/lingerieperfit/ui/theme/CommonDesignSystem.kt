@@ -468,10 +468,10 @@ fun FitSlider(
             AnimatedContent(
                 targetState = currentFitIndex,
                 transitionSpec = {
-                    fadeIn(animationSpec = tween(2000)).togetherWith(
+                    fadeIn(animationSpec = tween(500)).togetherWith(
                         fadeOut(
                             animationSpec = tween(
-                                2000
+                                500
                             )
                         )
                     )
@@ -920,7 +920,7 @@ fun FitInputEdit(state: HomeState, viewModel: HomeViewModel) {
                         isFocused = focusState.isFocused
                     },
                 textStyle = MaterialTheme.typography.bodyMedium.copy(
-                    color = MaterialTheme.colorScheme.tertiary,
+                    color = MaterialTheme.colorScheme.tertiary, fontSize = 12.sp
                 ),
                 cursorBrush = SolidColor(Color(0xFF7E7E7E)),
                 keyboardOptions = KeyboardOptions(
@@ -933,9 +933,9 @@ fun FitInputEdit(state: HomeState, viewModel: HomeViewModel) {
                         contentAlignment = Alignment.Center,
                         modifier = Modifier.padding(horizontal = 16.dp)
                     ) {
-                        if (!isFocused) {
+                        if (!isFocused && state.onInputBand.isEmpty() && state.currentOnBoard == YesIdoOnBoard.ChartCalculationBra || state.onInputHip.isEmpty()  && state.currentOnBoard == YesIdoOnBoard.ChartCalculationHip) {
                             ShyawayTextMedium(
-                                text = placeHolder,
+                                text = "Band (eg. 90cm)",
                                 style = MaterialTheme.typography.bodyMedium.copy(
                                     color = MaterialTheme.colorScheme.primary,
                                     fontSize = 11.sp,
@@ -978,7 +978,7 @@ fun FitInputEdit(state: HomeState, viewModel: HomeViewModel) {
                             isFocused2 = focusState.isFocused
                         },
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.tertiary,
+                        color = MaterialTheme.colorScheme.tertiary, fontSize = 12.sp
                     ),
                     cursorBrush = SolidColor(Color(0xFF7E7E7E)),
                     keyboardOptions = KeyboardOptions(

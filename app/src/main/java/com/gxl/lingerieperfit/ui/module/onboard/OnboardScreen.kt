@@ -48,7 +48,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun OnBoardScreen(navController: NavHostController, viewModel: HomeViewModel = koinViewModel()) {
 
-    LaunchedEffect(key1 = Unit){
+    LaunchedEffect(key1 = Unit) {
         viewModel.getOnBoarData()
     }
 
@@ -69,116 +69,116 @@ fun OnBoardScreen(navController: NavHostController, viewModel: HomeViewModel = k
             ),
         contentAlignment = Alignment.BottomCenter
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 60.dp, horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.perfit_logo),
-                    contentDescription = "logo",
-                    modifier = Modifier
-                        .size(56.dp),
-                    tint = Color.Unspecified
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                ShyawayTextMedium(
-                    text = "LINGERIE - PERFIT",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.primary,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-                Spacer(modifier = Modifier.height(32.dp))
 
-                HorizontalPager(
-                    state = pageState,
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                ) { page ->
-                    if (state.onBoardData.isNotEmpty()) {
-                        PagerItem(item = state.onBoardData[page])
+                        .fillMaxWidth()
+                        .padding(vertical = 60.dp, horizontal = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.perfit_logo),
+                        contentDescription = "logo",
+                        modifier = Modifier
+                            .size(56.dp),
+                        tint = Color.Unspecified
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ShyawayTextMedium(
+                        text = "LINGERIE - PERFIT",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+
+                    HorizontalPager(
+                        state = pageState,
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                    ) { page ->
+                        if (state.onBoardData.isNotEmpty()) {
+                            PagerItem(item = state.onBoardData[page])
+                        }
                     }
                 }
             }
-        }
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // Page indicators that sync with pager
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                repeat(3) { index ->
-                    Box(
-                        modifier = Modifier
-                            .size(10.dp)
-                            .background(
-                                color = if (pageState.currentPage == index)
-                                    MaterialTheme.colorScheme.primary
-                                else
-                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                                shape = CircleShape
-                            )
-                    )
+                // Page indicators that sync with pager
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    repeat(3) { index ->
+                        Box(
+                            modifier = Modifier
+                                .size(10.dp)
+                                .background(
+                                    color = if (pageState.currentPage == index)
+                                        MaterialTheme.colorScheme.primary
+                                    else
+                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                                    shape = CircleShape
+                                )
+                        )
+                    }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(62.dp))
+                Spacer(modifier = Modifier.height(62.dp))
 
-            Button(
-                onClick = {
-                    when (pageState.currentPage) {
-                        0, 1 -> {
-                            // First and second page: scroll to next page
-                            coroutineScope.launch {
-                                pageState.animateScrollToPage(pageState.currentPage + 1)
+                Button(
+                    onClick = {
+                        when (pageState.currentPage) {
+                            0, 1 -> {
+                                coroutineScope.launch {
+                                    pageState.animateScrollToPage(pageState.currentPage + 1)
+                                }
                             }
-                        }
-                        2 -> {
-                            // Third page: navigate to home
-                            navController.navigate(Screen.Home) {
-                                popUpTo(Screen.OnBoard) {
-                                    inclusive = true
+
+                            2 -> {
+                                navController.navigate(Screen.Home) {
+                                    popUpTo(Screen.OnBoard) {
+                                        inclusive = true
+                                    }
                                 }
                             }
                         }
-                    }
-                },
-                shape = RoundedCornerShape(28.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                ),
-                modifier = Modifier
-                    .width(144.dp)
-                    .height(48.dp)
-            ) {
-                ShyawayTextMedium(
-                    text = if (pageState.currentPage == 2) "Get Started" else "Next",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold
+                    },
+                    shape = RoundedCornerShape(28.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    ),
+                    modifier = Modifier
+                        .width(144.dp)
+                        .height(48.dp)
+                ) {
+                    ShyawayTextMedium(
+                        text = if (pageState.currentPage == 2) "Get Started" else "Next",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     )
-                )
-            }
+                }
 
-            Spacer(modifier = Modifier.height(44.dp))
+                Spacer(modifier = Modifier.height(44.dp))
+            }
         }
-    }
 }
 
 @Composable

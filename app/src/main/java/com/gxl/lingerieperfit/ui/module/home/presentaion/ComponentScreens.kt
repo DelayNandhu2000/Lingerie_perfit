@@ -103,20 +103,8 @@ fun DoYouKnow(viewModel: HomeViewModel, state: HomeState) {
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
+        else->{}
 
-        YesIdoOnBoard.WhichBRAND -> {}
-        YesIdoOnBoard.WhichSize -> {}
-        YesIdoOnBoard.BandFit -> {}
-        YesIdoOnBoard.CupFit -> {}
-        YesIdoOnBoard.HookFit -> {}
-        YesIdoOnBoard.StrapFit -> {}
-        YesIdoOnBoard.ShoulderType -> {}
-        YesIdoOnBoard.BustFallType -> {}
-        YesIdoOnBoard.BustShapeType -> {}
-        YesIdoOnBoard.PlacementType -> {}
-        YesIdoOnBoard.Final -> {}
-        YesIdoOnBoard.ChartCalculationBra -> {}
-        YesIdoOnBoard.ChartCalculationHip -> {}
     }
 }
 

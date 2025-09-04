@@ -185,6 +185,7 @@ fun FitScreens(state: HomeState, viewModel: HomeViewModel) {
 
             YesIdoOnBoard.DoYoKnow -> {
                 if (state.doYouSelect.isNotEmpty()) {
+                    Log.d("doYouSelect",state.doYouSelect.toString())
                     DoYouKnow(viewModel, state)
                 }
             }
@@ -193,7 +194,6 @@ fun FitScreens(state: HomeState, viewModel: HomeViewModel) {
                 FitScreen(state.bandFit ?: emptyList(), onFitSelected = {bandFit->
                     viewModel.getTheCurrentFit(bandFit.title, SelectedFit.BandFit)
                 })
-                Log.d("FiFit", "FitScreens: ${state.bandFit}")
             }
 
             YesIdoOnBoard.CupFit -> {
@@ -218,7 +218,6 @@ fun FitScreens(state: HomeState, viewModel: HomeViewModel) {
             YesIdoOnBoard.ShoulderType -> {}
             YesIdoOnBoard.BustFallType -> {
                 FitScreen (state.bustFallType, onFitSelected = {bustFallFit->
-                    Log.d("ResultPosition", "calculation: $bustFallFit")
                     viewModel.getTheCurrentFit(bustFallFit.title,SelectedFit.BustFallType)
                 })
             }
@@ -233,7 +232,6 @@ fun FitScreens(state: HomeState, viewModel: HomeViewModel) {
                 FitScreen(state.bustPlacementType, onFitSelected = {placementFit->
                     viewModel.getTheCurrentFit(placementFit.title,SelectedFit.PlacementType)
                 })
-                Log.d("ResultPosition", "calculation: ${state.bustPosition}")
             }
 
             YesIdoOnBoard.WomenHood -> {
@@ -261,7 +259,6 @@ fun FitScreens(state: HomeState, viewModel: HomeViewModel) {
                     if(state.chartDataHip == null)
                     viewModel.getSizeChart("panty")
                 }
-                Log.d("ResultPosition", "calculation: ${state.bustPosition}")
                 SetSizeCalculator(state,viewModel)
             }
         }
@@ -327,14 +324,14 @@ fun fitNavigationController(state: HomeState, context: Context, viewModel: HomeV
         YesIdoOnBoard.WomenHood -> {
             if(state.womenHood.any { it.status })
             viewModel.switchCurrentScreen(YesIdoOnBoard.MenstrualCycle)
-            else Toast.makeText(context, "Please select the first", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(context, "Please select womanHood are you in", Toast.LENGTH_SHORT).show()
 
         }
 
         YesIdoOnBoard.MenstrualCycle -> {
             if(state.menstrualCycle.any { it.status })
             viewModel.switchCurrentScreen(YesIdoOnBoard.DoYoKnow)
-            else Toast.makeText(context, "Please select the first", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(context, "Please select menstrual cycle are you in", Toast.LENGTH_SHORT).show()
         }
 
         YesIdoOnBoard.Final -> {}
