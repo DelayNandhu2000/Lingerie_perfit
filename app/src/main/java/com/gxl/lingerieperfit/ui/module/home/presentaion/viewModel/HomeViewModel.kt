@@ -26,7 +26,6 @@ class HomeViewModel(
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
-
     fun getSizeChart(category: String) {
         viewModelScope.launch {
             homeUseCase.getSizeChart(category).collect { result ->
@@ -35,14 +34,12 @@ class HomeViewModel(
                         _state.update {
                             it.copy(sizeChartError = result.errorBody, sizeChartLoading = false)
                         }
-                        Log.d("TAGss!!", "getSizeChart: ${result.errorBody}")
                     }
 
                     ApiResult.Loading -> {
                         _state.update {
                             it.copy(sizeChartLoading = true)
                         }
-                        Log.d("TAGss!!", "getSizeLoading")
                     }
 
                     is ApiResult.Success -> {
@@ -276,7 +273,7 @@ class HomeViewModel(
     }
 
     fun setTopBarInc() {
-        val size = 5 // always 5
+        val size = 5
         val count = when (state.value.currentOnBoard) {
             YesIdoOnBoard.WomenHood -> 2
             YesIdoOnBoard.ChartCalculationBra -> 4

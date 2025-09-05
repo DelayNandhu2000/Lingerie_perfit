@@ -31,6 +31,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,7 +59,7 @@ fun DoYouKnow(viewModel: HomeViewModel, state: HomeState) {
                 val isSelected = it.status
                 Column {
                     SelectionBox(it) {
-                        val stateChange = state.womenHood.mapIndexed { index, s ->
+                        val stateChange = state.womenHood.mapIndexed {index, s ->
                             s.copy(status = if (index == position) !isSelected else false)
                         }
                         viewModel.resetDoYouKnowSelect(stateChange, "hood")
@@ -77,7 +78,7 @@ fun DoYouKnow(viewModel: HomeViewModel, state: HomeState) {
                 val isSelected = it.status
                 Column {
                     SelectionBox(it) {
-                        val stateChange = state.menstrualCycle.mapIndexed { index, s ->
+                        val stateChange = state.menstrualCycle.mapIndexed {index,s ->
                             s.copy(status = if (index == position) !isSelected else false)
                         }
                         viewModel.resetDoYouKnowSelect(stateChange, "menstrual")
@@ -254,6 +255,7 @@ fun FinalScreen(viewModel: HomeViewModel, state: HomeState) {
     Box(modifier = Modifier.fillMaxWidth()) {
         Column {
             FinalTop()
+            Spacer(modifier = Modifier.height(16.dp))
             FinalResultBox(state.fitFinalSize)
         }
     }
@@ -269,7 +271,7 @@ fun FinalTop() {
         Image(
             painter = painterResource(id = R.drawable.perfit_logo),
             contentDescription = null,
-            modifier = Modifier.padding(top = 12.dp)
+            modifier = Modifier.size(44.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
         ShyawayTextMedium(
@@ -277,7 +279,17 @@ fun FinalTop() {
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
+                fontSize = 14.sp
+            )
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        ShyawayTextMedium(
+            "Based on the information you provided, we recommend",
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.tertiary,
+                fontWeight = FontWeight.Normal,
+                fontSize = 12.sp,
+                textAlign = TextAlign.Center
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -328,12 +340,12 @@ fun FinalResultBox(fitFinalSize: String?) {
     }
 }
 
+
 @Composable
 fun ResultFirstBox(fitFinalSize: String?) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp, horizontal = 34.dp),
+            .fillMaxWidth().padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ShyawayTextMedium(
@@ -361,7 +373,7 @@ fun ResultFirstBox(fitFinalSize: String?) {
                 )
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(13.dp))
         ShyawayTextMedium(
             "YOUR BODY SHAPE",
             style = MaterialTheme.typography.bodyMedium.copy(
@@ -381,7 +393,7 @@ fun ResultSecondBox() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp, horizontal = 16.dp),
+            .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ShyawayTextMedium(

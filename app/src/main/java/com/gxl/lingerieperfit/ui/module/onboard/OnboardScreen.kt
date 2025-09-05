@@ -13,12 +13,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -61,67 +61,47 @@ fun OnBoardScreen(navController: NavHostController, viewModel: HomeViewModel = k
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFFFFCED4),
-                        Color(0xFFFFF6F7)
+                    colors = listOf(Color(0xFFFFCED4), Color(0xFFFFF6F7))
+                )
+            )
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Top section
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.perfit_logo),
+                    contentDescription = "logo",
+                    modifier = Modifier.size(56.dp),
+                    tint = Color.Unspecified
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                ShyawayTextMedium(
+                    text = "LINGERIE - PERFIT",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
                     )
                 )
-            ),
-        contentAlignment = Alignment.BottomCenter
-    ) {
+                Spacer(modifier = Modifier.height(32.dp))
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 60.dp, horizontal = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.perfit_logo),
-                        contentDescription = "logo",
-                        modifier = Modifier
-                            .size(56.dp),
-                        tint = Color.Unspecified
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    ShyawayTextMedium(
-                        text = "LINGERIE - PERFIT",
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.primary,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(32.dp))
-
-                    HorizontalPager(
-                        state = pageState,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                    ) { page ->
-                        if (state.onBoardData.isNotEmpty()) {
-                            PagerItem(item = state.onBoardData[page])
-                        }
+                HorizontalPager(
+                    state = pageState,
+                    modifier = Modifier.fillMaxWidth()
+                ) { page ->
+                    if (state.onBoardData.isNotEmpty()) {
+                        PagerItem(item = state.onBoardData[page])
                     }
                 }
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // Page indicators that sync with pager
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Spacer(modifier = Modifier.height(24.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     repeat(3) { index ->
                         Box(
                             modifier = Modifier
@@ -136,35 +116,27 @@ fun OnBoardScreen(navController: NavHostController, viewModel: HomeViewModel = k
                         )
                     }
                 }
+            }
 
-                Spacer(modifier = Modifier.height(62.dp))
-
+            // Bottom section (indicators + button)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Button(
                     onClick = {
                         when (pageState.currentPage) {
-                            0, 1 -> {
-                                coroutineScope.launch {
-                                    pageState.animateScrollToPage(pageState.currentPage + 1)
-                                }
+                            0, 1 -> coroutineScope.launch {
+                                pageState.animateScrollToPage(pageState.currentPage + 1)
                             }
-
                             2 -> {
                                 navController.navigate(Screen.Home) {
-                                    popUpTo(Screen.OnBoard) {
-                                        inclusive = true
-                                    }
+                                    popUpTo(Screen.OnBoard) { inclusive = true }
                                 }
                             }
                         }
                     },
                     shape = RoundedCornerShape(28.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    ),
-                    modifier = Modifier
-                        .width(144.dp)
-                        .height(48.dp)
+                    modifier = Modifier.width(144.dp).height(42.dp)
                 ) {
                     ShyawayTextMedium(
                         text = if (pageState.currentPage == 2) "Get Started" else "Next",
@@ -175,44 +147,43 @@ fun OnBoardScreen(navController: NavHostController, viewModel: HomeViewModel = k
                         )
                     )
                 }
-
-                Spacer(modifier = Modifier.height(44.dp))
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
+    }
+
 }
 
 @Composable
 fun PagerItem(item: OnBoardData) {
     Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.wrapContentHeight(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = item.image),
             contentDescription = "image",
             modifier = Modifier.size(264.dp)
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         ShyawayTextMedium(
             text = item.title.uppercase(),
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.secondary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                letterSpacing = 0.5.sp,
+                lineHeight = 20.sp,
                 textAlign = TextAlign.Center,
             ),
             mLine = 2
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         ShyawayTextMedium(
             text = item.dec,
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.tertiary,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Normal,
-                letterSpacing = 0.5.sp,
                 textAlign = TextAlign.Center,
             ),
             mLine = 3

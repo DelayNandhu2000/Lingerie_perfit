@@ -59,6 +59,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
@@ -216,7 +217,7 @@ fun NavigationBtn(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 44.dp),
+            .padding(bottom = 32.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -460,8 +461,7 @@ fun FitSlider(
         // Main image and content area
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
             // Animated image transition
@@ -479,7 +479,6 @@ fun FitSlider(
                 label = "fit_transition"
             ) { fitIndex ->
                 val fit = bandFitList[fitIndex]
-
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -488,14 +487,11 @@ fun FitSlider(
                         painter = painterResource(id = fit.image),
                         contentDescription = fit.title,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f)
+                            .size(240.dp)
                             .clip(RoundedCornerShape(16.dp)),
                         contentScale = ContentScale.Crop
                     )
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
+                    Spacer(modifier = Modifier.height(40.dp))
                     // Title
                     ShyawayTextMedium(
                         fit.title,
@@ -524,7 +520,6 @@ fun FitSlider(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 32.dp)
         ) {
 
             // Custom slider track with labels
@@ -616,8 +611,7 @@ fun FitSlider(
             // Slider labels (showing all options)
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 12.dp, start = 16.dp, end = 16.dp),
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 bandFitList.forEachIndexed { index, fit ->
@@ -634,7 +628,6 @@ fun FitSlider(
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
 
         }
     }
@@ -809,7 +802,7 @@ fun FinalButtons(clickStart: () -> Unit, clickShop: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp, vertical = 44.dp),
+            .padding(start = 24.dp, end = 24.dp , bottom = 24.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

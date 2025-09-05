@@ -55,9 +55,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = koin
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
         Column(modifier = Modifier.fillMaxSize()) {
-            HomeTopBar(state){
-                fitBackNavigationController(state, viewModel)
-            }
+            HomeTopBar(state){ fitBackNavigationController(state, viewModel) }
             Spacer(modifier = Modifier.height(16.dp))
             Box {
                 Column(
@@ -141,7 +139,6 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = koin
                   viewModel.switchCurrentScreen(YesIdoOnBoard.DoYoKnow)
               })
             }
-
         }
 
         BackHandler {
@@ -271,7 +268,7 @@ fun fitNavigationController(state: HomeState, context: Context, viewModel: HomeV
             if (state.currentBrand.any { it.status }) {
                 viewModel.switchCurrentScreen(YesIdoOnBoard.WhichSize)
             } else {
-                Toast.makeText(context, "Please select the first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please select current band", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -279,7 +276,7 @@ fun fitNavigationController(state: HomeState, context: Context, viewModel: HomeV
             if (state.cupSize.any { it.status } && state.bandSize.any { it.status }) {
                 viewModel.switchCurrentScreen(YesIdoOnBoard.BandFit)
             } else {
-                Toast.makeText(context, "Please select the first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please select your size", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -287,7 +284,7 @@ fun fitNavigationController(state: HomeState, context: Context, viewModel: HomeV
             when(state.doYouSelect.find { it.status }?.title){
                 "YES, I DO!" -> viewModel.switchCurrentScreen(YesIdoOnBoard.WhichBRAND)
                 "NO, I NEED TO GET MY RIGHT SIZE!" -> viewModel.switchCurrentScreen(YesIdoOnBoard.ChartCalculationBra)
-                else -> Toast.makeText(context, "Please select the first", Toast.LENGTH_SHORT).show()
+                else -> Toast.makeText(context, "Please select", Toast.LENGTH_SHORT).show()
             }
         }
 
